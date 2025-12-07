@@ -1,0 +1,11 @@
+1 Python
+2 JavaScript
+3 C
+4 PHP
+5 Java
+6 Go
+7 C++
+8 Ruby 
+9 Rust 
+10 Pascal
+
