@@ -1,19 +1,6 @@
-services:
-  app_mysql:
-    build: ./app 
-    ports:
-      - "${APP_PORT}:${APP_PORT}"
-    depends_on:
-      - mysql_db
-    environment:
-      - DATABASE_URL=${DATABASE_URL}
-      - MYSQL_HOST=${MYSQL_HOST}
-      - MYSQL_PORT=${MYSQL_PORT}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-    env_file:
-      - .env
+# docker-compose.yml
 
+services:
   mysql_db:
     image: mysql:8.0.40-debian
     container_name: mysql-container
@@ -22,12 +9,31 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
     ports:
-      - "3306:3306"
+      - "3307:3306"  # Cambiado para evitar conflicto
     volumes:
       - datos_persistentes_BD-mysql:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  app_mysql:
+    build: ./app
+    container_name: app-container
+    ports:
+      - "${APP_PORT}:${APP_PORT}"
+    depends_on:
+      mysql_db:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - MYSQL_HOST=${MYSQL_HOST}
+      - MYSQL_PORT=${MYSQL_PORT}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - APP_PORT=${APP_PORT}
     env_file:
       - .env
 
 volumes:
   datos_persistentes_BD-mysql:
-
