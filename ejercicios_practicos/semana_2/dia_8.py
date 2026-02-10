@@ -58,10 +58,26 @@ def buscar_contacto():
 def editar_contacto(): #definimos funcion "editar_contacto"
     nombre = input("Introduce el nombre del contacto a editar: ") #aqui pedimos q escriban el nombre y se guarda en la variable nombre
     if nombre in contactos: # aqui se buscará el contacto y se agregarán los nuevos datos q el usuario debe introducir         
-        telefono = input("Introduce el nuevo número de teléfono: ") 
-        email = input("Introduce el nuevo correo electrónico: ")
-        contactos[nombre] = {"telefono": telefono, "email": email} # Buscamos en el dic contactos con el nombre ingresado y remplazamos el valor con las varables telefono y email
+        q_editar = input("¿Qué deseas editar? (1: Nombre 2: Teléfono, 3: Email): ")
+        if q_editar == "1":
+            nuevo_nombre = input("Introduce el nuevo nombre: ")
+            contactos[nuevo_nombre] = contactos.pop(nombre) #aqui se busca el contacto con el nombre ingresado y se cambia la llave por el nuevo nombre
+            print(f"Nombre del contacto actualizado a {nuevo_nombre}.")
+            return
+        elif q_editar == "2":
+            telefono = input("Introduce el nuevo número de teléfono: ")
+            contactos[nombre]["telefono"] = telefono # Buscamos en el dic contactos con el nombre ingresado y remplazamos el valor de la llave telefono con la variable telefono
+            print(f"Teléfono del contacto {nombre} actualizado a {telefono}.")
+            return
+        elif q_editar == "3":
+            email = input("Introduce el nuevo correo electrónico: ")
+            contactos[nombre]["email"] = email # Buscamos en el dic contactos con el nombre ingresado y remplazamos el valor de la llave email con la variable email
+            print(f"Email del contacto {nombre} actualizado a {email}.")
+            return
+        else:
+            print("Opción no válida.")
         print(f"Contacto {nombre} actualizado correctamente.")
+    
     else:
         print("Contacto no encontrado.")
 
