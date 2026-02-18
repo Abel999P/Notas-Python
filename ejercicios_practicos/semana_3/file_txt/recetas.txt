@@ -1,0 +1,7 @@
+Receta: Pancakes
+Ingredientes: Leche,huevos,azucar,harina
+Instrucciones: Mezclar todo
+
+Receta: Ensalada
+Ingredientes: tomates,huevos,zanaorias
+Instrucciones: cortar y mesclar con sal 
